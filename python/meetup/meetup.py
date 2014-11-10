@@ -9,16 +9,11 @@ def meetup_day(year,month,targetday,targetweek):
     steps = dict(zip(['1st','2nd','3rd','4th','last'],range(7,36,7)))
     steps['teenth'] = 19
     targetday = weekdays[targetday]
-    getDay = {0: relativedelta.MO(-1),
-              1: relativedelta.TU(-1),
-              2: relativedelta.WE(-1),
-              3: relativedelta.TH(-1),
-              4: relativedelta.FR(-1),
-              5: relativedelta.SA(-1),
-              6: relativedelta.SU(-1),}
+    getDay = {v: 'relativedelta.{}(-1)'.format(k[:2].upper()) for k,v in weekdays.iteritems()}
     
 
-    d = datetime.date(year,month,1) + relativedelta.relativedelta(day=steps[targetweek],weekday=getDay[targetday])
+
+    d = datetime.date(year,month,1) + relativedelta.relativedelta(day=steps[targetweek],weekday=eval(getDay[targetday]))
     return d
 
 
